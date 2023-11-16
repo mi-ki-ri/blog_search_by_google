@@ -8,7 +8,9 @@ client = openai.Client()
 
 urls = search("RPGツクール", tld="jp", lang="ja", stop=255)
 
-for url in urls[0:5]:
+for i, url in enumerate(urls):
+    if i > 5:
+        break
     print(url)
     got = requests.get(url)
 
