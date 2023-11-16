@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 client = openai.Client()
 
 
-urls = search("RPGツクール", tld="jp", lang="ja", stop=255)
+urls = search("RPGツクール ブログ", tld="jp", lang="ja", stop=255)
 
 for i, url in enumerate(urls):
-    if i > 5:
+    if i > 10:
         break
     print(url)
     got = requests.get(url)
