@@ -19,7 +19,7 @@ for i, url in enumerate(urls):
 
     bodytext = soup.find("body").get_text().replace("\n", "")
 
-    print(bodytext)
+    # print(bodytext)
 
     completion = client.chat.completions.create(
         messages=[
@@ -28,7 +28,7 @@ for i, url in enumerate(urls):
             {"role": "system", "content": "JSON{like_blog_or_not: 0.5}"},
             {"role": "user", "content": bodytext[0:1920]},
         ],
-        model="gpt-4",
+        model="gpt-4-1106-preview",
         max_tokens=2048,
         response_format={"type": "json_object"},
     )
