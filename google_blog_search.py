@@ -25,7 +25,7 @@ for i, url in enumerate(urls):
         messages=[
             {"role": "system", "content": "あなたは渡されたテキストが個人（会社でも）ブログかどうかを判断するAIです。"},
             {"role": "system", "content": "判断した結果は、0.0~1.0の間の数値で表してください。"},
-            {"role": "system", "content": "{like_blog_or_not: 0.5}"},
+            {"role": "system", "content": "JSON{like_blog_or_not: 0.5}"},
             {"role": "user", "content": bodytext[0:1920]},
         ],
         model="gpt-4",
