@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import argparse
+import time
 
 
 def main():
@@ -23,13 +24,16 @@ def main():
         lang="ja",
         start=int(args.start),
         stop=(int(args.start) + int(args.limit)),
+        pause=1.0,
+        country="ja",
     )
 
     if not Path(f"./dist/{word}.tsv").exists():
         with open(f"./dist/{word}.tsv", mode="w") as f:
-            f.write("url\tpoint\n")
+            f.write("url\tdate\tpoint\n")
 
     for i, url in enumerate(urls):
+        time.sleep(0.1)
         print(f"{i+1}/{args.limit} {url}")
         # print(url)
         got = ""
@@ -74,7 +78,7 @@ def main():
         point = pointJ["like_blog_or_not"]
         print(point)
         with open(f"./dist/{word}.tsv", mode="a") as f:
-            f.write(f"{url}\t{point}\n")
+            f.write(f"{url}\t{got.headers['Date']}\t{point}\n")
 
 
 main()
