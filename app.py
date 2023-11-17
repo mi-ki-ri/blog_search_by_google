@@ -30,7 +30,7 @@ def main():
 
     if not Path(f"./dist/{word}.tsv").exists():
         with open(f"./dist/{word}.tsv", mode="w") as f:
-            f.write("url\tdate\tpoint\n")
+            f.write("url\ttitle\tpoint\n")
 
     for i, url in enumerate(urls):
         time.sleep(0.1)
@@ -50,6 +50,8 @@ def main():
         if bodytext == "":
             bodytext = "error"
             continue
+
+        title_text = soup.find("title").get_text().replace("\n", "")
 
         # print(bodytext)
 
@@ -78,7 +80,7 @@ def main():
         point = pointJ["like_blog_or_not"]
         print(point)
         with open(f"./dist/{word}.tsv", mode="a") as f:
-            f.write(f"{url}\t{got.headers['Date']}\t{point}\n")
+            f.write(f"{url}\t{title_text}\t{point}\n")
 
 
 main()
