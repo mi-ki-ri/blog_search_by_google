@@ -1,11 +1,12 @@
 from pathlib import Path
-from googlesearch import search
+from googlesearch import search, get_tbs
 import openai
 import requests
 from bs4 import BeautifulSoup
 import json
 import argparse
 import time
+import datetime
 
 
 def main():
@@ -26,11 +27,15 @@ def main():
         stop=(int(args.start) + int(args.limit)),
         pause=1.0,
         country="ja",
+        tbs=get_tbs(
+            datetime.date(datetime.date.today().year, 1, 1),
+            datetime.date(datetime.date.today().year, 12, 31),
+        ),
     )
 
     if not Path(f"./dist/{word}.tsv").exists():
         with open(f"./dist/{word}.tsv", mode="w") as f:
-            f.write("url\ttitle\tpoint\n")
+            f.write("url\tpoint\n")
 
     for i, url in enumerate(urls):
         time.sleep(0.1)
@@ -50,8 +55,6 @@ def main():
         if bodytext == "":
             bodytext = "error"
             continue
-
-        title_text = soup.find("title").get_text().replace("\n", "")
 
         # print(bodytext)
 
@@ -80,7 +83,7 @@ def main():
         point = pointJ["like_blog_or_not"]
         print(point)
         with open(f"./dist/{word}.tsv", mode="a") as f:
-            f.write(f"{url}\t{title_text}\t{point}\n")
+            f.write(f"{url}\t{point}\n")
 
 
 main()
