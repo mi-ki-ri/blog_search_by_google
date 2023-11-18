@@ -28,8 +28,12 @@ def main():
         pause=1.0,
         country="ja",
         tbs=get_tbs(
-            datetime.date(datetime.date.today().year, 1, 1),
-            datetime.date(datetime.date.today().year, 12, 31),
+            datetime.date(
+                datetime.date.today().year - 1, datetime.date.month, datetime.date.day
+            ),
+            datetime.date(
+                datetime.date.today().year, datetime.date.month, datetime.date.day
+            ),
         ),
     )
 
@@ -49,8 +53,11 @@ def main():
 
         # BS4
         soup = BeautifulSoup(got.text, "html.parser")
-
-        bodytext = soup.find("body").get_text().replace("\n", "")
+        bodytext = ""
+        try:
+            bodytext = soup.find("body").get_text().replace("\n", "")
+        except:
+            continue
 
         if bodytext == "":
             bodytext = "error"
