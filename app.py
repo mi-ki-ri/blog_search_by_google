@@ -29,10 +29,14 @@ def main():
         country="ja",
         tbs=get_tbs(
             datetime.date(
-                datetime.date.today().year - 1, datetime.date.month, datetime.date.day
+                datetime.date.today().year - 1,
+                int(datetime.date.today().month),
+                int(datetime.date.today().day),
             ),
             datetime.date(
-                datetime.date.today().year, datetime.date.month, datetime.date.day
+                datetime.date.today().year,
+                int(datetime.date.today().month),
+                int(datetime.date.today().day),
             ),
         ),
     )
@@ -67,7 +71,10 @@ def main():
 
         completion = client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "あなたは渡されたテキストが個人（会社でも）ブログかどうかを判断するAIです。"},
+                {
+                    "role": "system",
+                    "content": "あなたは渡されたテキストが個人（会社でも）ブログ記事かどうかを判断するAIです。",
+                },
                 {"role": "system", "content": "判断した結果は、0.0~1.0の間の数値で表してください。"},
                 {
                     "role": "system",
